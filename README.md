@@ -19,6 +19,7 @@ Later versions of ORCA are developed separately and are not part of this snapsho
 |---|---|
 | `orca/` | The ORCA pipeline used in the paper. The triage workflow is in `orca/domains/malware/` and `orca/domains/binary/`, orchestration in `orca/core/`. |
 | `scripts/` | The scripts used to run the experiments: batch runs, the single-prompt baseline, component ablations, timing, the Random Forest and XGBoost comparison, scoring and stability agreement. |
+| `data/` | The manifest of the 306 binaries in the detection collection, with hashes, labels, families, sources, names, and the selection rules (see `data/README.md`). |
 
 No binaries are included. ORCA uses static analysis only; never execute malware samples.
 
