@@ -1,0 +1,1 @@
+{"imports": [], "features": {"size": 799432, "is_stripped": 0, "is_packed": 0, "has_cpp_symbols": 0, "format_pe": 0, "format_elf": 1, "imports_count": 0, "strings_count": 500, "strings_avg_len": 4.764, "sections_count": 8, "entropy_max": 7.716, "entropy_mean": 3.2122625, "high_entropy_sections": 1, "functions_count": 2, "function_size_max": 349, "function_size_mean": 197.5}}

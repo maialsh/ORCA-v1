@@ -18,10 +18,9 @@ dependencies = [
 [project.optional-dependencies]
 binja = []  # Binary Ninja is proprietary — user installs separately
 network = ["scapy>=2.5"]
-yara = ["yara-python>=4.3"]
 sandbox = ["paramiko>=3.0"]
 embeddings = ["numpy>=1.24", "sentence-transformers>=2.2"]
-all = ["scapy>=2.5", "yara-python>=4.3", "paramiko>=3.0", "numpy>=1.24"]
+all = ["scapy>=2.5", "paramiko>=3.0", "numpy>=1.24"]
 
 [project.scripts]
 orca = "orca.cli:main"

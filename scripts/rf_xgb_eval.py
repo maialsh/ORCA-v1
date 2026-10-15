@@ -1,10 +1,11 @@
 """Random Forest and XGBoost on ORCA's static features under three splits.
 
-source:  malware family held out, benign programs grouped by source collection
-         (Linux utilities, Sysinternals, portable tools), one group per fold
-family:  malware family held out, benign programs assigned at random to the folds
+family:   malware families held out one at a time, benign programs assigned at random to the folds
+source:   malware families and benign source collections (Linux utilities, Sysinternals,
+          portable tools) held out one at a time
 standard: stratified five-fold
-Usage: rf_xgb_eval_three_splits.py <manifest.csv> <features_dir> [seed]
+Usage: rf_xgb_eval.py [manifest.csv] [features_dir] [seed]
+Defaults: data/detection_manifest_304.csv, data/features (one JSON per SHA-256), seed 42.
 """
 import csv, json, os, sys
 import numpy as np
@@ -13,24 +14,24 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import LeaveOneGroupOut, StratifiedKFold
 from xgboost import XGBClassifier
 
-manifest, fdir = sys.argv[1], sys.argv[2]
+manifest = sys.argv[1] if len(sys.argv) > 1 else "data/detection_manifest_304.csv"
+fdir = sys.argv[2] if len(sys.argv) > 2 else "data/features"
 SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 42
-NORM = {"Miner": "Coinminer", "Rootkits": "Rootkit"}
 
-rows = [(r, json.load(open(os.path.join(fdir, r["neutral_name"] + ".json"))))
-        for r in csv.DictReader(open(manifest))]
+rows = sorted(((r, json.load(open(os.path.join(fdir, r["sha256"] + ".json"))))
+               for r in csv.DictReader(open(manifest))), key=lambda x: x[0]["sha256"])
 KEYS = sorted(rows[0][1]["features"].keys())
-y = np.array([r["truth"] == "malicious" for r, _ in rows], dtype=int)
+y = np.array([r["label"] == "malicious" for r, _ in rows], dtype=int)
 num = np.array([[d["features"][k] for k in KEYS] for _, d in rows], dtype=float)
 docs = [" ".join(d["imports"]) for _, d in rows]
-fam = [NORM.get(r["family"], r["family"]) for r, _ in rows]
-mal_fams = sorted({f for (r, _), f in zip(rows, fam) if r["truth"] == "malicious"})
+fam = [r["family_or_category"] for r, _ in rows]
+mal_fams = sorted({f for (r, _), f in zip(rows, fam) if r["label"] == "malicious"})
 rng = np.random.RandomState(SEED)
 
 splits = {
     "source": LeaveOneGroupOut().split(num, y, np.array(fam)),
     "family": LeaveOneGroupOut().split(num, y, np.array(
-        [f if r["truth"] == "malicious" else mal_fams[rng.randint(len(mal_fams))]
+        [f if r["label"] == "malicious" else mal_fams[rng.randint(len(mal_fams))]
          for (r, _), f in zip(rows, fam)])),
     "standard": StratifiedKFold(5, shuffle=True, random_state=SEED).split(num, y),
 }

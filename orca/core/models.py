@@ -271,7 +271,6 @@ class TriageResult(BaseModel):
     imphash: Optional[str] = None
     ssdeep: Optional[str] = None
     tlsh: Optional[str] = None
-    yara_matches: List[str] = Field(default_factory=list)
     quick_verdict: str = "unknown"  # clean, suspicious, malicious, unknown
 
 

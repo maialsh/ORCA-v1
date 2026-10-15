@@ -3,43 +3,6 @@ import json
 import pytest
 
 
-# ── YARA Scanner ───────────────────────────────────────────────
-
-class TestYaraScanner:
-    def test_scanner_init(self):
-        from orca.domains.malware.yara_scanner import YaraScanner
-        scanner = YaraScanner()
-        # Either yara is installed or not — both are valid
-        assert isinstance(scanner.available, bool)
-
-    def test_scanner_builtin_rules(self):
-        from orca.domains.malware.yara_scanner import BUILTIN_RULES_SOURCE
-        assert "upx_packed" in BUILTIN_RULES_SOURCE
-        assert "anti_debug_techniques" in BUILTIN_RULES_SOURCE
-        assert "shellcode_patterns" in BUILTIN_RULES_SOURCE
-
-
-# ── Hash Lookup ────────────────────────────────────────────────
-
-class TestHashLookup:
-    def test_merge_verdicts_malicious(self):
-        from orca.domains.malware.hash_lookup import HashLookup
-        hl = HashLookup(vt_api_key="", bazaar_enabled=False)
-        results = {
-            "virustotal": {"malicious_count": 25, "popular_threat_name": "trojan.generic"},
-        }
-        verdict = hl._merge_verdicts(results)
-        assert verdict["classification"] == "malicious"
-        assert verdict["confidence"] > 50
-
-    def test_merge_verdicts_clean(self):
-        from orca.domains.malware.hash_lookup import HashLookup
-        hl = HashLookup(vt_api_key="", bazaar_enabled=False)
-        results = {"virustotal": {"malicious_count": 0}}
-        verdict = hl._merge_verdicts(results)
-        assert verdict["classification"] == "unknown"
-
-
 # ── HITL Manager ───────────────────────────────────────────────
 
 class TestHITL:

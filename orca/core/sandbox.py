@@ -160,7 +160,6 @@ class SandboxConnector:
                 "strings": f"strings -n 6 {remote_sample} | head -200",
                 "exiftool": f"exiftool {remote_sample} 2>/dev/null || true",
                 "ssdeep": f"ssdeep {remote_sample} 2>/dev/null || true",
-                "yara": f"yara -r /opt/yara-rules/ {remote_sample} 2>/dev/null || true",
                 "peframe": f"peframe {remote_sample} 2>/dev/null || echo 'N/A'",
                 "floss": f"floss --quiet {remote_sample} 2>/dev/null | head -100 || true",
             }
