@@ -1,4 +1,4 @@
-"""Compare an ablation run against the reference ORCA run (R4#6).
+"""Compare an ablation run against the reference ORCA run.
 
 Usage: compare_ablation.py <manifest.csv> <ref_outdir> <abl_outdir> [flips.csv]
 

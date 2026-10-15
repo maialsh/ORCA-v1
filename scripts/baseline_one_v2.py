@@ -1,16 +1,14 @@
-"""Instrumented single-prompt baseline for the 325-collection extension.
+"""Instrumented single-prompt baseline for the full detection collection.
 
 Identical evidence assembly to baseline_one.py (tier1), plus per-sample
 metrics: extraction/LLM latency, input+output tokens, cost, and exact
 truncation accounting (what was available vs what fit in the prompt).
-Answers R3#2 (token/context/truncation), R2#2 (time breakdown), R4#8
-(runtime/token/cost). Writes one JSON per binary; never touches the
-frozen outputs_baseline dir.
+Writes one JSON per binary.
 
 Usage: baseline_one_v2.py <binary_path> <out.json>
 """
 import sys, json, time
-sys.path.insert(0, "/Users/maitha/Desktop/Manuscript2_ORCA/ORCA")
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))  # repository root
 from orca.domains.binary.workflow import static_analysis_agent
 from orca.core.llm.provider import LLMProvider
 

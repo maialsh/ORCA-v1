@@ -30,12 +30,15 @@ either API access to a language model or a local model served through Ollama.
 
 ```
 pipenv install
-python -m orca.cli --binary /path/to/binary --goal malware -o report.json
+python -m orca.cli --binary /path/to/binary --goal comprehensive -o report.json
 ```
 
-The batch scripts take a manifest of samples and an output folder; pass absolute paths. Ablation
-conditions are selected with the `ORCA_ABLATE` environment variable (comma-separated step names).
-Paths inside the scripts refer to the original analysis machine and need adjusting.
+The experiments used `--goal comprehensive`. The batch scripts in `scripts/` take a folder of staged
+binaries, a manifest of samples, and an output folder, and run from the repository root. Set `PY` to
+the Python interpreter of the environment if it is not `python3`. Ablation conditions are selected
+with the `ORCA_ABLATE` environment variable (comma-separated step names). `scripts/rf_xgb_eval.py`
+reproduces the classifier comparison under the family, source, and standard splits. It also needs
+`scikit-learn` and `xgboost` (`pip install scikit-learn xgboost`).
 
 ## Licence
 

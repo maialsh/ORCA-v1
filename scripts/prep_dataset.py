@@ -8,8 +8,9 @@ a truth manifest. Re-runnable; skips files already staged.
 import csv, hashlib, os, shutil, subprocess, tempfile
 from pathlib import Path
 
-COLLECTION = Path("/Users/maitha/Desktop/Manuscript2_ORCA/Collection")
-OUT = Path("/Users/maitha/Desktop/Manuscript2_ORCA/ORCA/dry_runs/full_run/staging")
+# Source collection and staging folder; override with ORCA_COLLECTION and ORCA_STAGING.
+COLLECTION = Path(os.environ.get("ORCA_COLLECTION", "Collection"))
+OUT = Path(os.environ.get("ORCA_STAGING", "staging"))
 OUT.mkdir(parents=True, exist_ok=True)
 MANIFEST = OUT.parent / "manifest_full.csv"
 PASSWORD = "infected"

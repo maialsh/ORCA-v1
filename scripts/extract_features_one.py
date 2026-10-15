@@ -1,4 +1,4 @@
-"""Extract classifier features for one binary (R1#1 RF/XGBoost baseline).
+"""Extract classifier features for one binary for the Random Forest and XGBoost comparison.
 
 Uses ORCA's own static extraction backend (Binary Ninja, no LLM calls, $0)
 and persists exactly the artifacts ORCA's agents see, reduced to numbers:
@@ -8,7 +8,7 @@ function statistics, file metadata.
 Usage: extract_features_one.py <binary_path> <out.json>
 """
 import sys, json
-sys.path.insert(0, "/Users/maitha/Desktop/Manuscript2_ORCA/ORCA")
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))  # repository root
 from orca.domains.binary.workflow import static_analysis_agent
 
 binary_path, out_path = sys.argv[1], sys.argv[2]

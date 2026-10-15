@@ -1,4 +1,4 @@
-"""Timed ORCA run for one binary (R2#2 / R4#8 instrumentation).
+"""Timed ORCA run for one binary with timing, token, and cost instrumentation.
 
 Runs the identical comprehensive CLI pipeline, but wraps every worker agent
 and every LLM request with a wall-clock timer. Verdicts from these runs are
@@ -8,7 +8,7 @@ Usage: orca_timed_one.py <binary_path> <out.json> <timing.json>
 """
 import sys, json, time
 
-sys.path.insert(0, "/Users/maitha/Desktop/Manuscript2_ORCA/ORCA")
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))  # repository root
 
 binary_path, out_path, timing_path = sys.argv[1], sys.argv[2], sys.argv[3]
 

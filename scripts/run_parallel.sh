@@ -4,10 +4,10 @@
 # Usage: run_parallel.sh <staging_dir> <manifest.csv> <out_dir> [parallel]
 set -u
 STAGING="$1"; MANIFEST="$2"; OUTDIR="$3"; PAR="${4:-8}"
-export PY=/Users/maitha/.local/share/virtualenvs/ORCA-w1m1Q-95/bin/python
+export PY="${PY:-python3}"
 export STAGING OUTDIR
 mkdir -p "$OUTDIR" "$OUTDIR/logs"
-cd /Users/maitha/Desktop/Manuscript2_ORCA/ORCA
+cd "$(dirname "$0")/.."   # repository root
 
 run_one() {
   local n="$1"

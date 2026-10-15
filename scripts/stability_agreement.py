@@ -1,4 +1,4 @@
-"""Verdict agreement across repeated identical runs (R5#12 stability check).
+"""Verdict agreement across repeated identical runs.
 
 Usage: stability_agreement.py <manifest.csv> <outdir1> <outdir2> [outdir3 ...]
 

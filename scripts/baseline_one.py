@@ -3,14 +3,15 @@
 Extracts the SAME raw static artifacts ORCA's tool-based agents see (imports,
 strings, decompiled top functions, file metadata) and feeds them to ONE GPT-4o
 prompt for a verdict -- no multi-agent decomposition, no shared state, no
-per-stage reasoning. This isolates the contribution of the orchestration.
+per-stage reasoning and no decision procedure. This measures what the staged
+pipeline adds over a plain single prompt.
 
 Usage: baseline_one.py <binary_path> <out.json> [tier]
   tier1 (default): all raw artifacts, verdict + reasoning
   tier3          : minimal (imports + strings only)
 """
 import sys, json
-sys.path.insert(0, "/Users/maitha/Desktop/Manuscript2_ORCA/ORCA")
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))  # repository root
 from orca.domains.binary.workflow import static_analysis_agent
 from orca.core.llm.provider import LLMProvider
 
